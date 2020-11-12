@@ -1,0 +1,13 @@
+C:\Users\kisam\Desktop\VegeStore\VegeStore\VegeStore\bin\Debug\netcoreapp3.1\VegeStore.exe
+C:\Users\kisam\Desktop\VegeStore\VegeStore\VegeStore\bin\Debug\netcoreapp3.1\VegeStore.deps.json
+C:\Users\kisam\Desktop\VegeStore\VegeStore\VegeStore\bin\Debug\netcoreapp3.1\VegeStore.runtimeconfig.json
+C:\Users\kisam\Desktop\VegeStore\VegeStore\VegeStore\bin\Debug\netcoreapp3.1\VegeStore.runtimeconfig.dev.json
+C:\Users\kisam\Desktop\VegeStore\VegeStore\VegeStore\bin\Debug\netcoreapp3.1\VegeStore.dll
+C:\Users\kisam\Desktop\VegeStore\VegeStore\VegeStore\bin\Debug\netcoreapp3.1\VegeStore.pdb
+C:\Users\kisam\Desktop\VegeStore\VegeStore\VegeStore\obj\Debug\netcoreapp3.1\VegeStore.csprojAssemblyReference.cache
+C:\Users\kisam\Desktop\VegeStore\VegeStore\VegeStore\obj\Debug\netcoreapp3.1\VegeStore.AssemblyInfoInputs.cache
+C:\Users\kisam\Desktop\VegeStore\VegeStore\VegeStore\obj\Debug\netcoreapp3.1\VegeStore.AssemblyInfo.cs
+C:\Users\kisam\Desktop\VegeStore\VegeStore\VegeStore\obj\Debug\netcoreapp3.1\VegeStore.csproj.CoreCompileInputs.cache
+C:\Users\kisam\Desktop\VegeStore\VegeStore\VegeStore\obj\Debug\netcoreapp3.1\VegeStore.dll
+C:\Users\kisam\Desktop\VegeStore\VegeStore\VegeStore\obj\Debug\netcoreapp3.1\VegeStore.pdb
+C:\Users\kisam\Desktop\VegeStore\VegeStore\VegeStore\obj\Debug\netcoreapp3.1\VegeStore.genruntimeconfig.cache

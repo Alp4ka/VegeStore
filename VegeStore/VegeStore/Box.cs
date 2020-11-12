@@ -24,7 +24,7 @@ namespace VegeStore
             get => price;
             set
             {
-                if(price > 0)
+                if(value > 0)
                 {
                     price = value;
                 }
@@ -34,6 +34,7 @@ namespace VegeStore
                 }
             }
         }
+        public double PriceWDamage { get; set; }
         public Box(double weight, double price)
         {
             Weight = weight;
@@ -42,7 +43,9 @@ namespace VegeStore
 
         public override string ToString()
         {
-            return $"Ящик овощей.\nВес: {Weight}кг\nЦена: {Price} рублей/кг";
+            return $"Ящик овощей\n" +
+                $"Вес: {Weight}кг\n" +
+                $"Цена: {Price} рублей/кг";
         }
     }
 
