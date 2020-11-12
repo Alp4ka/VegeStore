@@ -27,7 +27,7 @@ namespace VegeStore
         public Container(int numberOfBoxes, ref List<Box> boxesToAdd)
         {
             Boxes = new List<Box>();
-            MaxCapacity = new Random().Next(50, 101);
+            MaxCapacity = new Random().Next(20, 30);
             MaxWeight = new Random().Next(70, 151);
             Damage = 0;
             List<Box> sortedBoxesToAdd = boxesToAdd.OrderBy(box => box.Weight).Reverse().ToList();
@@ -80,12 +80,42 @@ namespace VegeStore
         }
         public override string ToString()
         {
-            return $"Контейнер\n" +
+            return $"_____Контейнер_____\n" +
                 $"Вместимость {CurrentLoad}/{MaxCapacity} ящиков\n" +
                 $"Вес: {CurrentWeight}/{MaxWeight} кг\n" +
                 $"Товара на сумму: {PriceWoDamage} руб\n" +
                 $"Уровень повреждений: {Damage:F4}\n" +
                 $"Цена с учетом повреждений: {PriceWDamage} руб";
+        }
+        public static bool TryParse(string inputLine, out List<Box> boxesToReturn)
+        {
+            boxesToReturn = new List<Box>();
+            // Container | *Price* *Weight* | *Price* *Weight* ...
+            try
+            {
+                double tempBoxPrice, tempBoxWeight;
+                string[] splittedInput = inputLine.Split('|').Select(element => element.Trim()).ToArray();
+                if(splittedInput[0] == "Container")
+                {
+                    for(int i =1; i < splittedInput.Length; ++i)
+                    {
+                        string[] boxInfo = splittedInput[i].Split().Select(element => element.Trim()).ToArray();
+                        tempBoxPrice = double.Parse(boxInfo[0]);
+                        tempBoxWeight = double.Parse(boxInfo[1]);
+                        Box tempBox = new Box(weight: tempBoxWeight, price: tempBoxPrice);
+                        boxesToReturn.Add(tempBox);
+                    }
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

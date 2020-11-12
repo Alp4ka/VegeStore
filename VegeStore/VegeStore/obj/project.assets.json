@@ -8,21 +8,17 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\kisam\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\kisam\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kisam\\Desktop\\VegeStore\\VegeStore\\VegeStore\\VegeStore.csproj",
+      "projectUniqueName": "C:\\Users\\kisam\\OneDrive\\Рабочий стол\\VegeStore\\VegeStore\\VegeStore\\VegeStore.csproj",
       "projectName": "VegeStore",
-      "projectPath": "C:\\Users\\kisam\\Desktop\\VegeStore\\VegeStore\\VegeStore\\VegeStore.csproj",
+      "projectPath": "C:\\Users\\kisam\\OneDrive\\Рабочий стол\\VegeStore\\VegeStore\\VegeStore\\VegeStore.csproj",
       "packagesPath": "C:\\Users\\kisam\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kisam\\Desktop\\VegeStore\\VegeStore\\VegeStore\\obj\\",
+      "outputPath": "C:\\Users\\kisam\\OneDrive\\Рабочий стол\\VegeStore\\VegeStore\\VegeStore\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
         "C:\\Users\\kisam\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"

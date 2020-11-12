@@ -49,12 +49,12 @@ namespace VegeStore
                 }
             }
         }
-        public Storage(int tariffPrice)
+        public Storage(double tariffPrice)
         {
             TariffPrice = tariffPrice;
             MaxCapacity = (new Random()).Next(50, 151);
         }
-        public Storage(int tariffPrice, int maxCapacity)
+        public Storage(double tariffPrice, int maxCapacity)
         {
             TariffPrice = tariffPrice;
             MaxCapacity = maxCapacity;
@@ -67,9 +67,9 @@ namespace VegeStore
         }
         public override string ToString()
         {
-            return $"Склад\n" +
+            return $"_____Склад_____\n" +
                 $"Вместимость {base.Count}/{MaxCapacity} контейнеров\n" +
-                $"Тариф: {TariffPrice} руб\n" +
+                $"Тариф: {TariffPrice} руб/контейнер\n" +
                 $"Стоимость всего товара: {FullPrice:F4} руб";
         }
         public bool Add(Container containerToAdd, out Container returnedContainer)
@@ -110,6 +110,32 @@ namespace VegeStore
             else
             {
                 base.RemoveAt(index);
+            }
+        }
+        public static bool TryParse(string inputLine, out Storage storage)
+        {
+            storage = null;
+            // Storage | *TariffPrice* *MaxCapacity*
+            try
+            {
+                double tempTariffPrice; int tempMaxCapacity;
+                string[] splittedInput = inputLine.Split('|').Select(element => element.Trim()).ToArray();
+                if (splittedInput[0] == "Storage")
+                {
+                    string[] storageInfo = splittedInput[1].Split().Select(element => element.Trim()).ToArray();
+                    tempTariffPrice = double.Parse(storageInfo[0]);
+                    tempMaxCapacity = Int32.Parse(storageInfo[1]);
+                    storage = new Storage(tempTariffPrice, tempMaxCapacity);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
             }
         }
     }

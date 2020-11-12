@@ -5,7 +5,7 @@ namespace VegeStore
     public class Box
     {
         private double weight;
-        private double price;
+        private double pricePerKg;
         public double Weight {
             get => weight;
             private set
@@ -20,32 +20,34 @@ namespace VegeStore
                 }
             }
         }
-        public double Price {
-            get => price;
+        public double PricePerKg {
+            get => pricePerKg;
             set
             {
                 if(value > 0)
                 {
-                    price = value;
+                    pricePerKg = value;
                 }
                 else
                 {
-                    throw new ArgumentException($"Неверное значение для цены ящика: {value}");
+                    throw new ArgumentException($"Неверное значение для цены за кг: {value}");
                 }
             }
         }
+        public double Price { get => PricePerKg * Weight; }
         public double PriceWDamage { get; set; }
         public Box(double weight, double price)
         {
             Weight = weight;
-            Price = price;
+            PricePerKg = price;
         }
 
         public override string ToString()
         {
-            return $"Ящик овощей\n" +
+            return $"_____Ящик овощей_____\n" +
                 $"Вес: {Weight}кг\n" +
-                $"Цена: {Price} рублей/кг";
+                $"Цена: {PricePerKg} рублей/кг\n" +
+                $"Общая стоимость: {Price}";
         }
     }
 
