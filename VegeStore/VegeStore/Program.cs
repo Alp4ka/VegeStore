@@ -11,8 +11,9 @@ namespace VegeStore
         
         static void Main(string[] args)
         {
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
-
+            List<Box> boxesRemain = new List<Box>();
             Storage storage = null;
             List<Container> containers = new List<Container>();
             CommadsHandler handler = new CommadsHandler();
@@ -28,9 +29,9 @@ namespace VegeStore
                 Program.WriteLineColor("Вы ошиблись вводом.", ConsoleColor.Red);
                 input = Console.ReadLine();
             }
+            Console.Clear();
             handler.ChooseMethodOfInput(input == "1"? true: false);
-            handler.toRead(ref containers, ref storage);
-           
+            handler.toRead(ref containers, ref storage, ref boxesRemain);
         }
     }
 }

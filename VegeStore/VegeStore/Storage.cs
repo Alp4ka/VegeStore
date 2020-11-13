@@ -61,7 +61,7 @@ namespace VegeStore
         }
         public string GetInfo()
         {
-            string message = ToString() + "\n\n" + String.Join("\n", base.ToArray().Select((box, index) => (index + 1).ToString() + ")" + box));
+            string message = ToString() + "\n\n" + String.Join("\n", base.ToArray().Select((container, index) => (index).ToString() + ")" + container));
             Program.WriteLineColor(message, ConsoleColor.DarkCyan);
             return message;
         }
@@ -76,7 +76,7 @@ namespace VegeStore
         {
             if(base.Count + 1 <= MaxCapacity)
             {
-                if(ReturnDeltaOfPriceAndTariff(containerToAdd) >= 0)
+                if(ReturnDeltaOfPriceAndTariff(containerToAdd) > 0)
                 {
                     containerToAdd.Damage = Math.Round(new Random().NextDouble() * (0.5), 4);
                     containerToAdd.SetRealPriceForContaining();
@@ -93,7 +93,8 @@ namespace VegeStore
             else
             {
                 returnedContainer = base[0];
-                base[0] = containerToAdd;
+                base.RemoveAt(0);
+                base.Add(containerToAdd);
                 return true;
             }
         }

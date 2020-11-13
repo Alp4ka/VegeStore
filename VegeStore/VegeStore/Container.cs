@@ -19,7 +19,7 @@ namespace VegeStore
         public Container()
         {
             Boxes = new List<Box>();
-            MaxCapacity = new Random().Next(50, 101);
+            MaxCapacity = new Random().Next(5, 30);
             MaxWeight = new Random().Next(70, 151);
             Damage = 0;
         }
@@ -27,7 +27,7 @@ namespace VegeStore
         public Container(int numberOfBoxes, ref List<Box> boxesToAdd)
         {
             Boxes = new List<Box>();
-            MaxCapacity = new Random().Next(20, 30);
+            MaxCapacity = new Random().Next(5, 30);
             MaxWeight = new Random().Next(70, 151);
             Damage = 0;
             List<Box> sortedBoxesToAdd = boxesToAdd.OrderBy(box => box.Weight).Reverse().ToList();
@@ -70,7 +70,7 @@ namespace VegeStore
         }
         public string GetInfo()
         {
-            string message = ToString() + "\n\n" + String.Join("\n", Boxes.Select((box, index) => (index+1).ToString() + ")" + box));
+            string message = ToString();
             Program.WriteLineColor(message, ConsoleColor.Yellow);
             return message;
         }
@@ -85,7 +85,9 @@ namespace VegeStore
                 $"Вес: {CurrentWeight}/{MaxWeight} кг\n" +
                 $"Товара на сумму: {PriceWoDamage} руб\n" +
                 $"Уровень повреждений: {Damage:F4}\n" +
-                $"Цена с учетом повреждений: {PriceWDamage} руб";
+                $"Цена с учетом повреждений: {PriceWDamage} руб" +
+                "\n\n" + 
+                String.Join("\n", Boxes.Select((box, index) => "    "+ (index).ToString() + ")" + box.ToString().Replace("\n", "\n    ")));
         }
         public static bool TryParse(string inputLine, out List<Box> boxesToReturn)
         {

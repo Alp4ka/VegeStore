@@ -1,0 +1,7 @@
+ShowContainers
+DeliverContainer 0
+StorageInfo
+ShowContainers
+ShowBoxes
+DeliverContainer 2
+StorageInfo

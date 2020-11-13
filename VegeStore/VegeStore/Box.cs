@@ -41,7 +41,11 @@ namespace VegeStore
             Weight = weight;
             PricePerKg = price;
         }
-
+        public string GetInfo()
+        {
+            Program.WriteLineColor(ToString(), ConsoleColor.Magenta);
+            return ToString();
+        }
         public override string ToString()
         {
             return $"_____Ящик овощей_____\n" +
