@@ -58,12 +58,20 @@ namespace VegeStore
             TariffPrice = tariffPrice;
             MaxCapacity = maxCapacity;
         }
+        /// <summary>
+        /// Возвращает информацию о складе.
+        /// </summary>
+        /// <returns> string с информацией. </returns>
         public string GetInfo()
         {
             string message = ToString() + "\n\n" + String.Join("\n", base.ToArray().Select((container, index) => (index).ToString() + ")" + container));
             Program.WriteLineColor(message, ConsoleColor.DarkCyan);
             return message;
         }
+        /// <summary>
+        /// Возвращает информацию о складе.
+        /// </summary>
+        /// <returns> string с информацией. </returns>
         public override string ToString()
         {
             return $"_____Склад_____\n" +
@@ -71,6 +79,12 @@ namespace VegeStore
                 $"Тариф: {TariffPrice} руб/контейнер\n" +
                 $"Стоимость всего товара: {FullPrice:F4} руб";
         }
+        /// <summary>
+        /// Добавить контейнер.
+        /// </summary>
+        /// <param name="containerToAdd"></param>
+        /// <param name="returnedContainer"> Контейнер, который пришлось выслат на улицу. </param>
+        /// <returns></returns>
         public bool Add(Container containerToAdd, out Container returnedContainer)
         {
             if(base.Count + 1 <= MaxCapacity)
@@ -97,6 +111,11 @@ namespace VegeStore
                 return true;
             }
         }
+        /// <summary>
+        /// Вернуть разницу в стоиомтьс контейнера и тарифа.
+        /// </summary>
+        /// <param name="containerToCheck"> Контейнер. </param>
+        /// <returns> double - дельта между тарифом и стоимостью контейнера. </returns>
         public double ReturnDeltaOfPriceAndTariff(Container containerToCheck)
         {
             return containerToCheck.PriceWDamage - TariffPrice;
@@ -112,6 +131,12 @@ namespace VegeStore
                 base.RemoveAt(index);
             }
         }
+        /// <summary>
+        /// Пробует запарсить инфу о складе.
+        /// </summary>
+        /// <param name="inputLine"></param>
+        /// <param name="storage"></param>
+        /// <returns> true, если все ок, false - иначе. </returns>
         public static bool TryParse(string inputLine, out Storage storage)
         {
             storage = null;

@@ -26,8 +26,8 @@ namespace VegeStore
                 input = Console.ReadLine();
             }
             Console.Clear();
-            handler.ChooseMethodOfInput(input == "1"? true: false);
-            handler.toRead(ref containers, ref storage, ref boxesRemain);
+            handler.ChooseMethodOfInput(input == "1");
+            handler.Start(ref containers, ref storage, ref boxesRemain);
         }
     }
 }

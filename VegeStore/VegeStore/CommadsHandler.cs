@@ -74,6 +74,10 @@ namespace VegeStore
             }
             WriteToFile(storage.GetInfo());
         }
+        public void Start(ref List<Container> containers, ref Storage storage, ref List<Box> boxesRemain)
+        {
+            toRead(ref containers, ref storage, ref boxesRemain);
+        }
         /// <summary>
         /// Пробует понять, че хочет пользователь.
         /// </summary>
@@ -221,6 +225,12 @@ namespace VegeStore
             containers.RemoveAt(index);
             Program.WriteLineColor($"Контейнер {index} успешно удален!", ConsoleColor.Green);
         }
+        /// <summary>
+        /// Доставить контейнер на склад.
+        /// </summary>
+        /// <param name="storage"> Склад. </param>
+        /// <param name="index"> Индекс контейнера на улице. </param>
+        /// <param name="containers"> Лист с контейнеарми. </param>
         public static void DeliverContainer(ref Storage storage, int index, ref List<Container> containers)
         {
             Container returnedContainer;
@@ -228,6 +238,12 @@ namespace VegeStore
             containers.RemoveAt(index);
             Program.WriteLineColor($"Контейнер {index} успешно доставлен на склад!", ConsoleColor.Green);
         }
+        /// <summary>
+        /// Положить ящик в контейнер.
+        /// </summary>
+        /// <param name="container"> Контейнер. </param>
+        /// <param name="boxIndex"> Индекс ящика на улице. </param>
+        /// <param name="boxes"> Лист с ящиками. </param>
         public static void BoxToContainer(ref Container container, int boxIndex, ref List<Box> boxes)
         {
             if (container.AddBox(boxes[boxIndex]))
@@ -237,27 +253,47 @@ namespace VegeStore
             }
             Program.WriteLineColor($"Похоже, что ящик {boxIndex} остался на улице!", ConsoleColor.Red);
         }
+        /// <summary>
+        /// Вышвырнуть контейнер со склада.
+        /// </summary>
+        /// <param name="storage"> Склад. </param>
+        /// <param name="containerIndex">Индекс контейнера на складе. </param>
+        /// <param name="containers"> Лист с контейнерами. </param>
         public static void ContainerFromStorage(ref Storage storage, int containerIndex, ref List<Container> containers)
         {
             containers.Add(storage[containerIndex]);
             storage.RemoveAt(containerIndex);
             Program.WriteLineColor($"Контейнер {containerIndex} успешно выкинули со склада и отправили на улицу!", ConsoleColor.Green);
         }
+        /// <summary>
+        /// Показать список ящиков на улице.
+        /// </summary>
+        /// <param name="boxes"> Лист ящиков. </param>
         public static void ShowBoxes(List<Box> boxes)
         {
             Program.WriteLineColor(String.Join("\n", boxes.Select((box, index) => (index).ToString() + ")" + box)), ConsoleColor.Magenta);
         }
+        /// <summary>
+        /// Показать список контейнеров на улице.
+        /// </summary>
+        /// <param name="containers"> Лист контейнеров. </param>
         public static void ShowContainers(List<Container> containers)
         {
             Program.WriteLineColor(String.Join("\n", containers.Select((container, index) => (index).ToString() + ")" + container)), ConsoleColor.Yellow);
         }
+        /// <summary>
+        /// Показать информацию о складе.
+        /// </summary>
+        /// <param name="storage"></param>
         public static void StorageInfo(Storage storage)
         {
             storage.GetInfo();
         }
+        /// <summary>
+        /// Метод с выводом всех доступных команд.
+        /// </summary>
         public static void Help()
         {
-            Process.Start(@"./webm.mp4");
             Program.WriteLineColor("Список команд, которые могут тебе помочь указаны ниже(звездочки писать не надо):\n" +
                 "CreateBox *ценаЗаКг* *вес* - создает новый ящик с овощами, отправляет на уличное хранение.\n" +
                 "CreateContainer - создает новый контейнер со случайными параметрами, отправляет на уличное хранение.\n" +
@@ -272,12 +308,19 @@ namespace VegeStore
                 "Write - записать ВСЕ изменения в файл Result.txt.\n" +
                 "Help - вывести списоке команд с их описанием.\n", ConsoleColor.Green);
         }
+        /// <summary>
+        /// Запись в файл Result.txt.
+        /// </summary>
+        /// <param name="message"> Что нужно записать. </param>
         public void WriteToFile(string message)
         {
             File.WriteAllText(Path,  message);
         }
 
-        //true = file, false = console
+        /// <summary>
+        /// Выбрать метод чтения.
+        /// </summary>
+        /// <param name="choice"> true - чтение из файла. false - чтение из консоли. </param>
         public void ChooseMethodOfInput(bool choice = false)
         {
             if (choice)
