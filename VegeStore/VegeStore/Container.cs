@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 
 namespace VegeStore
 {
@@ -44,7 +42,11 @@ namespace VegeStore
             }
             boxesToAdd = sortedBoxesToAdd;
         }
-
+        /// <summary>
+        /// Прибавить ящик.
+        /// </summary>
+        /// <param name="boxToAdd"></param>
+        /// <returns> true, если без конфузов, false - иначе. </returns>
         public bool AddBox(Box boxToAdd)
         {
             if(boxToAdd.Weight + CurrentWeight <= MaxWeight)
@@ -68,16 +70,27 @@ namespace VegeStore
         {
             return Boxes;
         }
+        /// <summary>
+        /// Вернуть инфу о контейнере.
+        /// </summary>
+        /// <returns> string с инфой. </returns>
         public string GetInfo()
         {
             string message = ToString();
             Program.WriteLineColor(message, ConsoleColor.Yellow);
             return message;
         }
+        /// <summary>
+        /// Устанавливает цену с учтом повреждений. 
+        /// </summary>
         public void SetRealPriceForContaining()
         {
             Boxes.ForEach(box=>box.PriceWDamage = box.Price * Damage);
         }
+        /// <summary>
+        /// Вернуть инфу о контейнере.
+        /// </summary>
+        /// <returns> string с инфой. </returns>
         public override string ToString()
         {
             return $"_____Контейнер_____\n" +
@@ -89,6 +102,12 @@ namespace VegeStore
                 "\n\n" + 
                 String.Join("\n", Boxes.Select((box, index) => "    "+ (index).ToString() + ")" + box.ToString().Replace("\n", "\n    ")));
         }
+        /// <summary>
+        /// Пробует парсить инфу о контейнере. 
+        /// </summary>
+        /// <param name="inputLine"></param>
+        /// <param name="boxesToReturn"></param>
+        /// <returns> true, если все ок. false - иначе. </returns>
         public static bool TryParse(string inputLine, out List<Box> boxesToReturn)
         {
             boxesToReturn = new List<Box>();

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Diagnostics;
 
 namespace VegeStore
 {
@@ -12,8 +10,16 @@ namespace VegeStore
     {
         public delegate void ToRead(ref List<Container> containers, ref Storage storage, ref List<Box> boxesToChange);
         public ToRead toRead;
+        /// <summary>
+        /// Путь до Result.txt.
+        /// </summary>
         public string Path{ get => "./Result.txt"; }
-        //public void AddContainer
+        /// <summary>
+        /// Если пользователь выбрал работу с файлами, данный метод запускает главный цикл в этом режиме.
+        /// </summary>
+        /// <param name="containers"> Лист с контейнерами, хранящимися на улице. </param>
+        /// <param name="storage"> Склад. </param>
+        /// <param name="boxesToChange"> Лист с коробками, хранящимися на улице. </param>
         public void ReadFromFiles(ref List<Container> containers, ref Storage storage, ref List<Box> boxesToChange)
         {
             Program.WriteLineColor("Хочу заметить, что текстовые файлы с тестами лежат в папке Debug/netcoreapp3.1\n" +
@@ -59,14 +65,23 @@ namespace VegeStore
             string[] actionsLines = File.ReadAllLines("./Actions.txt");
             for (int i = 0; i < actionsLines.Length; ++i)
             {
+                Program.WriteLineColor($">>> {actionsLines[i]}");
                 if (!TryParse(actionsLines[i], ref storage, ref containers, ref boxesToChange))
                 {
-                    Program.WriteLineColor($"Ошибка обработки строки {i}!", ConsoleColor.Red);
+                    Program.WriteLineColor($"Ошибка обработки строки {i}! Help для помощи. ", ConsoleColor.Red);
 
                 }
             }
             WriteToFile(storage.GetInfo());
         }
+        /// <summary>
+        /// Пробует понять, че хочет пользователь.
+        /// </summary>
+        /// <param name="input"> Строка с входными данными. </param>
+        /// <param name="storage"> Склад. </param>
+        /// <param name="containers"> Лист с контейнерами, хранящимися на улице. </param>
+        /// <param name="boxes"> Лист с коробками, хранящимися на улице. </param>
+        /// <returns> true, если входные данные оказались адекватными, false - в противном случае. </returns>
         public bool TryParse(string input, ref Storage storage, ref List<Container> containers, ref List<Box> boxes)
         {
             try
@@ -116,11 +131,23 @@ namespace VegeStore
                 }
                 return true;
             }
-            catch
+            catch (IndexOutOfRangeException)
             {
+                Program.WriteLineColor("Неверное количество аргументов!", ConsoleColor.Red);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Program.WriteLineColor(ex.Message, ConsoleColor.Red);
                 return false;
             }
         }
+        /// <summary>
+        /// Если пользователь выбрал работу с консолью, данный метод запускает главный цикл в этом режиме.
+        /// </summary>
+        /// <param name="containers"></param>
+        /// <param name="storage"></param>
+        /// <param name="boxesToChange"></param>
         public void ReadFromConsole(ref List<Container> containers, ref Storage storage, ref List<Box> boxesToChange)
         {
             Program.WriteLineColor("Хочу заметить, что текстовые файлы с тестами лежат в папке Debug/netcoreapp3.1\n" +
@@ -129,11 +156,12 @@ namespace VegeStore
                 "Storage | *Тариф_double* *Вместимость_int*");
             while (!Storage.TryParse(Console.ReadLine(), out storage))
             {
-                Program.WriteLineColor("Ошибка в считывании информации о Storage!", ConsoleColor.Red);
+                Program.WriteLineColor("Ошибка в считывании информации о Storage! Введите повторно", ConsoleColor.Red);
             }
                 Program.WriteLineColor("Storage создан!", ConsoleColor.Green);
                 storage.GetInfo();
             string input;
+            Help();
             Program.WriteLineColor("Вводите команды. Чтобы завершить работу программы, сделайте пустой ввод.");
             while(true)
             {
@@ -145,10 +173,16 @@ namespace VegeStore
                 }
                 if (!TryParse(input, ref storage, ref containers, ref boxesToChange))
                 {
-                    Program.WriteLineColor("Ошибка обработки строки!", ConsoleColor.Red);
+                    Program.WriteLineColor("Ошибка обработки строки! Help для помощи", ConsoleColor.Red);
                 }
             }
         }
+        /// <summary>
+        /// Создать ящик.
+        /// </summary>
+        /// <param name="boxes"> Лист с коробками, хранящимися на улице. </param>
+        /// <param name="price"> Требуемая цена ящика. </param>
+        /// <param name="weight"> Требуемый вес ящика. </param>
         public static void CreateBox(ref List<Box> boxes, double price, double weight)
         {
             Box box = new Box(weight, price);
@@ -156,6 +190,10 @@ namespace VegeStore
             Program.WriteLineColor("Коробка успешно добавлена:\n" +
                  $"{box}", ConsoleColor.Green);
         }
+        /// <summary>
+        /// Создать ящик.
+        /// </summary>
+        /// <param name="containers"> Лист с контейнерами, хранящимися на улице. </param>
         public static void CreateContainer(ref List<Container> containers)
         {
             Container container = new Container();
@@ -163,11 +201,21 @@ namespace VegeStore
             Program.WriteLineColor("Контейнер успешно добавлен:\n" +
                  $"{container}", ConsoleColor.Green);
         }
+        /// <summary>
+        /// Утилизировать уличный ящик с нуждным индексом.
+        /// </summary>
+        /// <param name="boxes"> Лист с ящиками. </param>
+        /// <param name="index"> Индекс ящика. </param>
         public static void DeleteBox(ref List<Box> boxes, int index)
         {
             boxes.RemoveAt(index);
             Program.WriteLineColor($"Ящик {index} успешно удален!", ConsoleColor.Green);
         }
+        /// <summary>
+        /// Утилизровать контейнер с нужным индексом.
+        /// </summary>
+        /// <param name="containers"> Лист с контейнерами. </param>
+        /// <param name="index"> Индекс контейнера. </param>
         public static void DeleteContainer(ref List<Container> containers, int index)
         {
             containers.RemoveAt(index);
@@ -182,9 +230,12 @@ namespace VegeStore
         }
         public static void BoxToContainer(ref Container container, int boxIndex, ref List<Box> boxes)
         {
-            container.AddBox(boxes[boxIndex]);
-            boxes.RemoveAt(boxIndex);
-            Program.WriteLineColor($"Ящик {boxIndex} помещен в контейнер!", ConsoleColor.Green);
+            if (container.AddBox(boxes[boxIndex]))
+            {
+                boxes.RemoveAt(boxIndex);
+                Program.WriteLineColor($"Ящик {boxIndex} помещен в контейнер!", ConsoleColor.Green);
+            }
+            Program.WriteLineColor($"Похоже, что ящик {boxIndex} остался на улице!", ConsoleColor.Red);
         }
         public static void ContainerFromStorage(ref Storage storage, int containerIndex, ref List<Container> containers)
         {
@@ -206,7 +257,20 @@ namespace VegeStore
         }
         public static void Help()
         {
-            Program.WriteLineColor("");
+            Process.Start(@"./webm.mp4");
+            Program.WriteLineColor("Список команд, которые могут тебе помочь указаны ниже(звездочки писать не надо):\n" +
+                "CreateBox *ценаЗаКг* *вес* - создает новый ящик с овощами, отправляет на уличное хранение.\n" +
+                "CreateContainer - создает новый контейнер со случайными параметрами, отправляет на уличное хранение.\n" +
+                "ShowBoxes - показать все ящики на улице с их индексами.\n" +
+                "ShowContainers - показать все контейнеры, хранящиеся на улице.\n" +
+                "DeleteContainer *индексКонтейнераНаУлице* - утилизировать контейнер с нужным индексом.\n" +
+                "DeleteBox *индексЯщикаНаУлице* - утилизировать ящик с нужным индексом.\n" +
+                "BoxToContainer *индексКонтейнераНаУлице* *индексЯщикаНаУлице* - переложить ящик в контейнер.\n" +
+                "DeliverContainer *индексКонтейнераНаУлице* - доставить контейнер на склад.\n" +
+                "ContainerFromStorage *индексКонтейнераНаСкладе* - вышвырнуть контейнер со склада.\n" +
+                "StorageInfo - вывести информацию о складе.\n" +
+                "Write - записать ВСЕ изменения в файл Result.txt.\n" +
+                "Help - вывести списоке команд с их описанием.\n", ConsoleColor.Green);
         }
         public void WriteToFile(string message)
         {

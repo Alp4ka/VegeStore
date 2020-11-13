@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security;
-using System.IO;
-using System.Linq;
-
 namespace VegeStore
 {
     public partial class Program

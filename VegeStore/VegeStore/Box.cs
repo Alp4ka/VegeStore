@@ -6,6 +6,9 @@ namespace VegeStore
     {
         private double weight;
         private double pricePerKg;
+        /// <summary>
+        /// Вес ящика.
+        /// </summary>
         public double Weight {
             get => weight;
             private set
@@ -20,6 +23,9 @@ namespace VegeStore
                 }
             }
         }
+        /// <summary>
+        /// Цена за кг.
+        /// </summary>
         public double PricePerKg {
             get => pricePerKg;
             set
@@ -35,17 +41,33 @@ namespace VegeStore
             }
         }
         public double Price { get => PricePerKg * Weight; }
+        /// <summary>
+        /// Цена с учетом повреждений.
+        /// </summary>
         public double PriceWDamage { get; set; }
+        /// <summary>
+        /// Конструктор ящика.
+        /// </summary>
+        /// <param name="weight"> Требуемый вес. </param>
+        /// <param name="price"> Требуемая цена. </param>
         public Box(double weight, double price)
         {
             Weight = weight;
             PricePerKg = price;
         }
+        /// <summary>
+        /// Вывод информации о ящике.
+        /// </summary>
+        /// <returns> Возвращает string с информацией о ящике. </returns>
         public string GetInfo()
         {
             Program.WriteLineColor(ToString(), ConsoleColor.Magenta);
             return ToString();
         }
+        /// <summary>
+        /// Информация о ящике без вывода на экран.
+        /// </summary>
+        /// <returns> Возвращает string с информацией о ящике.</returns>
         public override string ToString()
         {
             return $"_____Ящик овощей_____\n" +
