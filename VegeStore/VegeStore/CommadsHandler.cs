@@ -27,25 +27,36 @@ namespace VegeStore
                 "Containers.txt - информация о Контейнерах с указанием ящиков, которые в них хотят запихнуть.\n" +
                 "Result.txt - результат работы программы.\n" +
                 "Actions.txt - команды, которые нужно выполнить.", ConsoleColor.Red);
-            if (!Storage.TryParse(File.ReadAllLines("./StorageInfo.txt")[0], out storage))
+            try
             {
-                Program.WriteLineColor("Ошибка в считывании информации о Storage!", ConsoleColor.Red);
-                return;
+                if (!Storage.TryParse(File.ReadAllLines("./StorageInfo.txt")[0], out storage))
+                {
+                    Program.WriteLineColor("Ошибка в считывании информации о Storage!", ConsoleColor.Red);
+                    Program.WriteLineColor("Ошибка в считывании информации о Storage! Enter для перезапуска", ConsoleColor.Red);
+                    Console.ReadLine();
+                    Restart();
+                }
+                else
+                {
+                    Program.WriteLineColor("Storage создан!", ConsoleColor.Green);
+                    storage.GetInfo();
+                }
             }
-            else
+            catch
             {
-                Program.WriteLineColor("Storage создан!", ConsoleColor.Green);
-                storage.GetInfo();
+                Program.WriteLineColor("Ошибка в считывании информации о Storage! Enter для перезапуска", ConsoleColor.Red);
+                Console.ReadLine();
+                Restart();
             }
-
             string[] containersInfoLines = File.ReadAllLines("./Containers.txt");
             for (int i = 0; i < containersInfoLines.Length; ++i)
             {
                 List<Box> boxes;
                 if (!Container.TryParse(containersInfoLines[i], out boxes))
                 {
-                    Program.WriteLineColor($"Ошибка в считывании информации о Контенйнере\n Строка: {i}!", ConsoleColor.Red);
-                    return;
+                    Program.WriteLineColor($"Ошибка в считывании информации о Контенйнере\n Строка: {i}! Enter для перезапуска", ConsoleColor.Red);
+                    Console.ReadLine();
+                    Restart();
                 }
                 else
                 {
