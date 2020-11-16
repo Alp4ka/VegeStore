@@ -130,6 +130,9 @@ namespace VegeStore
                     case "Help":
                         Help();
                         break;
+                    case "Restart":
+                        Restart();
+                        break;
                     default:
                         return false;
                 }
@@ -265,6 +268,17 @@ namespace VegeStore
             storage.RemoveAt(containerIndex);
             Program.WriteLineColor($"Контейнер {containerIndex} успешно выкинули со склада и отправили на улицу!", ConsoleColor.Green);
         }
+        public static void Restart()
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.CreateNoWindow = false;
+            startInfo.UseShellExecute = false;
+            startInfo.WindowStyle = ProcessWindowStyle.Normal;
+            startInfo.FileName = System.IO.Path.Combine("./VegeStore.exe");
+            Console.Clear();
+            Process.Start(startInfo);
+            Environment.Exit(0);
+        }
         /// <summary>
         /// Показать список ящиков на улице.
         /// </summary>
@@ -306,7 +320,8 @@ namespace VegeStore
                 "ContainerFromStorage *индексКонтейнераНаСкладе* - вышвырнуть контейнер со склада.\n" +
                 "StorageInfo - вывести информацию о складе.\n" +
                 "Write - записать ВСЕ изменения в файл Result.txt.\n" +
-                "Help - вывести списоке команд с их описанием.\n", ConsoleColor.Green);
+                "Help - вывести списоке команд с их описанием.\n" +
+                "Restart - перезапуск приложения.", ConsoleColor.Green);
         }
         /// <summary>
         /// Запись в файл Result.txt.
